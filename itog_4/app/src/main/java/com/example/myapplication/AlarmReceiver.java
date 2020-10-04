@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,14 @@ public class AlarmReceiver extends BroadcastReceiver  {
         if (vibrator.hasVibrator()) {
             vibrator.vibrate(pattern, 2);
         }*/
+
+        /*Bundle arguments1 = getIntent().getExtras();
+        String hour = arguments1.get("hour_1").toString();
+        Bundle arguments2 = getIntent().getExtras();
+        String minute = arguments2.get("minute_1").toString();
+        System.out.println(hour);
+        System.out.println(minute);*/
+
 
         Intent i = new Intent();
         i.setClassName("com.example.myapplication", "com.example.myapplication.Alarm");

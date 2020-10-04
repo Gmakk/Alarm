@@ -13,11 +13,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button alarm_on, alarm_off;
+    Button alarm_on, alarm_off, list;
     TextView updateText;
     EditText hour1;
     AlarmManager alarmManager;
@@ -29,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         alarm_on = (Button) findViewById(R.id.alarm_on);
         alarm_off = (Button) findViewById(R.id.alarm_off);
+        list = (Button) findViewById(R.id.list);
+        Button sleep1 = (Button) findViewById(R.id.sleep);
         updateText = (TextView) findViewById(R.id.updateTextTime);
         final AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
 
@@ -47,6 +53,16 @@ public class MainActivity extends AppCompatActivity {
                 String hour_string = String.valueOf(Integer.parseInt(hour1.getText().toString()));
                 String minute_string = String.valueOf(Integer.parseInt(minute1.getText().toString()));
 
+                Bundle b1 = new Bundle();
+                b1.putString("hour_1", hour_string);
+                Bundle b2 = new Bundle();
+                b2.putString("minute_1", minute_string);
+                Intent intent1 = new Intent(MainActivity.this, List.class);
+                intent1.putExtras(b1);
+                Intent intent2 = new Intent(MainActivity.this, List.class);
+                intent2.putExtras(b2);
+                System.out.println(hour_string);
+                System.out.println(minute_string);
 
                 if(Integer.parseInt(minute1.getText().toString()) < 10)
                     minute_string = "0" + String.valueOf(Integer.parseInt(minute1.getText().toString()));
@@ -62,8 +78,28 @@ public class MainActivity extends AppCompatActivity {
         alarm_off.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                alarmManager.cancel(pendingIntent);
                 updateText.setText("Будильник выключен");
             }
         });
+        sleep1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Date currentDate = new Date();
+                System.out.println(currentDate);
+            }
+        });
+        list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent3 = new Intent(MainActivity.this, List.class);
+                startActivity(intent3);
+            }
+        });
+    }
+
+    public void clickButton(View view) {
+        Intent intent = new Intent(this, Tracker.class);
+        startActivity(intent);
     }
 }
