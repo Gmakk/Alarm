@@ -1,0 +1,72 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.chaquo.python'
+
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    /*sourceSets {
+        main {
+            python.srcDir "/data/data/com.example.myapplication/files"
+        }
+    }*/
+    defaultConfig {
+        applicationId "com.example.myapplication"
+        minSdkVersion 26 //16
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+
+        python {
+            buildPython "C:/Users/krasi/Desktop/programms/Python/pythonProject1/Scripts/python.exe"
+            //buildPython "C:/Users/krasi/Desktop/python_3_5/python.exe"
+            //buildPython "python"    ???????
+            pip {
+                options "--timeout", "10000"
+                install "numpy"
+                install "pandas"
+                install "xlrd"                            //записать в файл
+                install "scikit-learn"
+                install "jdcal"
+                install "lxml"
+                install "openpyxl<=1.7.0" //<=1.7.0
+                //install "et_xmlfile" //C:/Users/krasi/Desktop/tar_gz/et_xmlfile-master.tar.gz
+                //install "openpyxl.styles==1.0.1"   //error
+                //install "openpyxl-3.0.5-py2.py3-none-any.whl"
+            }
+        }
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64" //"armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation files('libs\\poi-3.12-android-a.jar')
+    implementation files('libs\\poi-ooxml-schemas-3.12-20150511-a.jar')
+    /// implementation files('libs\\poi-ooxml-3.17.jar')
+    //implementation files('libs\\poishadow-all.jar')
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+}
